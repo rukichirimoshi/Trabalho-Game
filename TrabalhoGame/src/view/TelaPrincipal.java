@@ -1,21 +1,18 @@
 package view;
 
-import javax.swing.JFrame;
-import java.awt.Dimension;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.TitledBorder;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JProgressBar;
-import javax.swing.JComboBox;
+
 import javax.swing.DefaultComboBoxModel;
-import model.EnumComportamento;
-import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 public class TelaPrincipal extends JFrame {
 
@@ -40,18 +37,11 @@ public class TelaPrincipal extends JFrame {
         pnOponentes.setSize(new Dimension(0, 225));
         getContentPane().add(pnOponentes, BorderLayout.NORTH);
         GridBagLayout gbl_pnOponentes = new GridBagLayout();
-        gbl_pnOponentes.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponentes.columnWidths = new int[] { 0, 0, 0, 0 };
         gbl_pnOponentes.rowHeights = new int[] { 0, 0, 0, 0 };
-        gbl_pnOponentes.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+        gbl_pnOponentes.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
         gbl_pnOponentes.rowWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
         pnOponentes.setLayout(gbl_pnOponentes);
-        
-        JButton btnAddOponente = new JButton("ADD Oponente");
-        GridBagConstraints gbc_btnAddOponente = new GridBagConstraints();
-        gbc_btnAddOponente.insets = new Insets(0, 0, 5, 0);
-        gbc_btnAddOponente.gridx = 3;
-        gbc_btnAddOponente.gridy = 0;
-        pnOponentes.add(btnAddOponente, gbc_btnAddOponente);
 
         JPanel pnOponenteDemo = new JPanel();
         GridBagConstraints gbc_pnOponenteDemo = new GridBagConstraints();
@@ -79,8 +69,8 @@ public class TelaPrincipal extends JFrame {
         tfNomeOpo1.setColumns(10);
 
         JProgressBar barVidaOpo1 = new JProgressBar();
-        barVidaOpo1.setMinimumSize(new Dimension(120, 20));
         barVidaOpo1.setStringPainted(true);
+        barVidaOpo1.setMinimumSize(new Dimension(120, 20));
         barVidaOpo1.setString("Vida");
         barVidaOpo1.setValue(75);
         barVidaOpo1.setName("");
@@ -92,7 +82,7 @@ public class TelaPrincipal extends JFrame {
         pnOponenteDemo.add(barVidaOpo1, gbc_barVidaOpo1);
 
         JComboBox cbComportamentoOpo1 = new JComboBox();
-        cbComportamentoOpo1.setModel(new DefaultComboBoxModel(EnumComportamento.values()));
+        cbComportamentoOpo1.setModel(new DefaultComboBoxModel());
         GridBagConstraints gbc_cbComportamentoOpo1 = new GridBagConstraints();
         gbc_cbComportamentoOpo1.fill = GridBagConstraints.HORIZONTAL;
         gbc_cbComportamentoOpo1.gridx = 0;
@@ -106,22 +96,15 @@ public class TelaPrincipal extends JFrame {
         pnJogadores.setSize(new Dimension(0, 225));
         getContentPane().add(pnJogadores, BorderLayout.CENTER);
         GridBagLayout gbl_pnJogadores = new GridBagLayout();
-        gbl_pnJogadores.columnWidths = new int[] { 0, 0, 0, 0, 0 };
-        gbl_pnJogadores.rowHeights = new int[] { 0, 0, 0, 0 };
-        gbl_pnJogadores.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
-        gbl_pnJogadores.rowWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+        gbl_pnJogadores.columnWidths = new int[] { 0, 0, 0, 0 };
+        gbl_pnJogadores.rowHeights = new int[] { 0, 0, 0 };
+        gbl_pnJogadores.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
+        gbl_pnJogadores.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
         pnJogadores.setLayout(gbl_pnJogadores);
-        
-        JButton btnAddJogador = new JButton("ADD Jogador");
-        GridBagConstraints gbc_btnAddJogador = new GridBagConstraints();
-        gbc_btnAddJogador.insets = new Insets(0, 0, 5, 0);
-        gbc_btnAddJogador.gridx = 3;
-        gbc_btnAddJogador.gridy = 0;
-        pnJogadores.add(btnAddJogador, gbc_btnAddJogador);
 
         JPanel pnJogadorDemo = new JPanel();
         GridBagConstraints gbc_pnJogadorDemo = new GridBagConstraints();
-        gbc_pnJogadorDemo.insets = new Insets(0, 0, 5, 5);
+        gbc_pnJogadorDemo.insets = new Insets(0, 0, 0, 5);
         gbc_pnJogadorDemo.fill = GridBagConstraints.BOTH;
         gbc_pnJogadorDemo.gridx = 1;
         gbc_pnJogadorDemo.gridy = 1;

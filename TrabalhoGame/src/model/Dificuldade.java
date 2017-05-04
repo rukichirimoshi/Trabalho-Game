@@ -1,7 +1,7 @@
 package model;
 
 
-public enum EnumDificuldade {
+public enum Dificuldade {
     FACIL,
     MEDIO,
     DIFICIL;

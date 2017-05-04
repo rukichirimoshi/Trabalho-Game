@@ -7,9 +7,9 @@ public class TelaTester {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
-            new TelaPrincipal().setVisible(true);;
+            new TelaInicio().setVisible(true);
+            ;
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
