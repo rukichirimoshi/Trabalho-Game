@@ -1,31 +1,34 @@
 package view;
 
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import javax.swing.JTextField;
-import model.Dificuldade;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+
+import model.Dificuldade;
 
 public class TelaInicio extends JFrame {
 
     private JTextField tfQtdOponentes;
     private JComboBox cbQtdJogadores;
     private JComboBox cbDificuldade;
+
+    private int qtdJogadores = 1;
+    private int qtdOponentes = 1;
 
     public TelaInicio() {
         iniciaComponentesDeTela();
@@ -102,6 +105,7 @@ public class TelaInicio extends JFrame {
         panel.add(lblQuantidadeDeOponentes, gbc_lblQuantidadeDeOponentes);
 
         tfQtdOponentes = new JTextField();
+        tfQtdOponentes.setText("1 Oponente");
         tfQtdOponentes.setEditable(false);
         GridBagConstraints gbc_tfQtdOponentes = new GridBagConstraints();
         gbc_tfQtdOponentes.insets = new Insets(0, 0, 5, 5);
@@ -110,11 +114,19 @@ public class TelaInicio extends JFrame {
         gbc_tfQtdOponentes.gridy = 3;
         panel.add(tfQtdOponentes, gbc_tfQtdOponentes);
         tfQtdOponentes.setColumns(10);
-        
+
         JButton btnIniciar = new JButton("Iniciar!");
         btnIniciar.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent arg0) {
-                //TODO carregar a tela principal
+                setVisible(false);
+                try {
+                    UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+                    TelaPrincipal t = new TelaPrincipal();
+                    t.iniciaComponentesJogadores(qtdJogadores, qtdOponentes, (Dificuldade) cbDificuldade.getSelectedItem());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         GridBagConstraints gbc_btnIniciar = new GridBagConstraints();
@@ -126,8 +138,8 @@ public class TelaInicio extends JFrame {
     }
 
     protected void verificaOponentes() {
-        int qtdJogadores = cbQtdJogadores.getSelectedIndex() + 1;
-        int qtdOponentes = 0;
+        qtdJogadores = cbQtdJogadores.getSelectedIndex() + 1;
+        qtdOponentes = 1;
 
         int indexDificuldade = cbDificuldade.getSelectedIndex();
         switch (indexDificuldade) {

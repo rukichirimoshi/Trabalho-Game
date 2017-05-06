@@ -1,5 +1,7 @@
 package model;
 
+import controller.MapaDoJogo;
+
 public class Oponente extends Jogador {
 
     private ComportamentoDoOponente comportamento;
@@ -15,15 +17,6 @@ public class Oponente extends Jogador {
 
     public void setComportamento(ComportamentoDoOponente comportamento) {
         this.comportamento = comportamento;
-    }
-
-    public void executaComportamento() {
-
-    }
-
-    @Override
-    public String toString() {
-        String s = "[Oponente] Nome: " + this.getNome() + "(" + this.getVida() + "/100)";
-        return s;
+        this.setAcaoAtual(comportamento.getComportamento(this));
     }
 }

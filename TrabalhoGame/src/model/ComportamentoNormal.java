@@ -2,9 +2,13 @@ package model;
 
 public class ComportamentoNormal implements ComportamentoDoOponente {
 
+    private static ComportamentoDoOponente instance;
+
     public static ComportamentoDoOponente getInstance() {
-        // TODO Auto-generated method stub
-        return null;
+        if (instance == null) {
+            instance = new ComportamentoNormal();
+        }
+        return instance;
     }
 
     @Override
@@ -16,4 +20,7 @@ public class ComportamentoNormal implements ComportamentoDoOponente {
         }
     }
 
+    public String getNomeComportamento() {
+        return "Normal";
+    }
 }

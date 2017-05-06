@@ -1,8 +1,14 @@
-package model;
+package controller;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+
+import model.Acao;
+import model.ComportamentoNormal;
+import model.Dificuldade;
+import model.Jogador;
+import model.Oponente;
 
 public class MapaDoJogo implements Observer {
 
@@ -35,6 +41,14 @@ public class MapaDoJogo implements Observer {
 
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
+    }
+
+    public Jogador getJogador(int index) {
+        return jogadores.get(index);
+    }
+
+    public Oponente getOponente(int index) {
+        return oponentes.get(index);
     }
 
     private void iniciaJogadores(int qtdJogadores) {
@@ -70,10 +84,11 @@ public class MapaDoJogo implements Observer {
         }
     }
 
-    public boolean rodada() {
+    public boolean rodada(int index) {
         //Verifica se algum dos lados não está com todos mortos
         boolean jogadoresVivos = false;
         boolean oponentesVivos = false;
+
         for (Jogador j : jogadores) {
             if (j.isVivo()) {
                 jogadoresVivos = true;
@@ -87,12 +102,15 @@ public class MapaDoJogo implements Observer {
             }
         }
 
+        System.out.println("========================== RODADA " + index + " ==========================");
+
         if (jogadoresVivos && oponentesVivos) {
             //Turno dos Jogadores
             for (Jogador j : jogadores) {
                 if (!j.isVivo()) {
                     break; //Sem direito a nada
                 }
+                System.out.println("TURNO DO " + j.getNome() + " [" + j.getAcaoAtual() + "]");
                 if (j.getAcaoAtual() == Acao.ATACAR) {
                     int dano = 0;
                     if (j.isArmado()) {
@@ -101,15 +119,27 @@ public class MapaDoJogo implements Observer {
                         dano = 3;
                     }
 
-                    int qtdOponentes = this.oponentes.size();
-                    int indexOponente = (int) (Math.random() * (qtdOponentes));
-                    Oponente o = oponentes.get(indexOponente);
-                    while (!o.isVivo()) {
-                        qtdOponentes = this.oponentes.size();
-                        indexOponente = (int) (Math.random() * (qtdOponentes));
-                        o = oponentes.get(indexOponente);
+                    oponentesVivos = false;
+                    for (Oponente o : oponentes) {
+                        if (o.isVivo()) {
+                            oponentesVivos = true;
+                            break;
+                        }
                     }
-                    o.serAtacado(dano);
+
+                    if (oponentesVivos) {
+                        int qtdOponentes = this.oponentes.size();
+                        int indexOponente = (int) (Math.random() * (qtdOponentes));
+                        Oponente o = oponentes.get(indexOponente);
+                        while (!o.isVivo()) {
+                            qtdOponentes = this.oponentes.size();
+                            indexOponente = (int) (Math.random() * (qtdOponentes));
+                            o = oponentes.get(indexOponente);
+                        }
+                        o.serAtacado(dano);
+                    } else {
+                        System.out.println("Nenhum oponente vivo para ser atacado.");
+                    }
                 }
             }
 
@@ -118,6 +148,7 @@ public class MapaDoJogo implements Observer {
                 if (!o.isVivo()) {
                     break;
                 }
+                System.out.println("TURNO DO " + o.getNome() + " [" + o.getAcaoAtual() + "]");
                 if (o.getAcaoAtual() == Acao.ATACAR) {
                     int dano = 0;
                     if (o.isArmado()) {
@@ -126,18 +157,44 @@ public class MapaDoJogo implements Observer {
                         dano = 3;
                     }
 
-                    int qtdJogadores = this.jogadores.size();
-                    int indexJogador = (int) (Math.random() * (qtdJogadores));
-                    Jogador j = jogadores.get(indexJogador);
-                    while (!j.isVivo()) {
-                        qtdJogadores = this.jogadores.size();
-                        indexJogador = (int) (Math.random() * (qtdJogadores));
-                        j = jogadores.get(indexJogador);
+                    jogadoresVivos = false;
+                    for (Jogador j : jogadores) {
+                        if (j.isVivo()) {
+                            jogadoresVivos = true;
+                            break;
+                        }
                     }
-                    j.serAtacado(dano);
+                    if (jogadoresVivos) {
+                        int qtdJogadores = this.jogadores.size();
+                        int indexJogador = (int) (Math.random() * (qtdJogadores));
+                        Jogador j = jogadores.get(indexJogador);
+                        while (!j.isVivo()) {
+                            qtdJogadores = this.jogadores.size();
+                            indexJogador = (int) (Math.random() * (qtdJogadores));
+                            j = jogadores.get(indexJogador);
+                        }
+                        j.serAtacado(dano);
+                    } else {
+                        System.out.println("Nenhum jogador vivo para ser atacado.");
+                    }
                 }
             }
             return true;
+        }
+
+        jogadoresVivos = false;
+        oponentesVivos = false;
+        for (Jogador j : jogadores) {
+            if (j.isVivo()) {
+                jogadoresVivos = true;
+                break;
+            }
+        }
+        for (Oponente o : oponentes) {
+            if (o.isVivo()) {
+                oponentesVivos = true;
+                break;
+            }
         }
         if (jogadoresVivos) {
             this.gameOver = false;
@@ -147,10 +204,26 @@ public class MapaDoJogo implements Observer {
         return false;
     }
 
+    public void printVidas() {
+        for (Jogador j : jogadores) {
+            System.out.println(j.toString());
+        }
+
+        for (Oponente o : oponentes) {
+            System.out.println(o.toString());
+        }
+    }
+
     public void alteraJogador(int indexJogador, Acao acao, boolean armado) {
         Jogador j = jogadores.get(indexJogador);
         j.setAcaoAtual(acao);
         j.setArmado(armado);
+    }
+
+    public void alteraOponente(int indexOponente, Acao acao, boolean armado) {
+        Oponente o = oponentes.get(indexOponente);
+        o.setAcaoAtual(acao);
+        o.setArmado(armado);
     }
 
     @Override

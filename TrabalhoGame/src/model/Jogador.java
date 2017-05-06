@@ -2,6 +2,8 @@ package model;
 
 import java.util.Observable;
 
+import controller.MapaDoJogo;
+
 public class Jogador extends Observable {
 
     private MapaDoJogo mapa;
@@ -62,12 +64,21 @@ public class Jogador extends Observable {
     }
 
     public void notificaVidaMudou(Jogador jObservable) {
-        System.out.println("Eu, " + this.getNome() + " fui notificado que a vida do " + jObservable.getNome() + " mudou para " + jObservable.getVida() + ".");
+        String s = "";
+        if (jObservable.isVivo()) {
+            s += "Eu, " + this.getNome() + " fui notificado que a vida do " + jObservable.getNome() + " mudou para " + jObservable.getVida() + ".";
+        } else {
+            s += "Eu, " + this.getNome() + " fui notificado que " + jObservable.getNome() + " foi morto.";
+        }
+        System.out.println(s);
     }
 
     public void serAtacado(int dano) {
         if (this.getAcaoAtual() == Acao.DEFENDER) {
-            this.setVida(this.getVida() - (dano - 3));
+            dano = dano - 3;
+            if (dano != 0) {
+                this.setVida(this.getVida() - (dano - 3));
+            }
         } else {
             this.setVida(this.getVida() - dano);
         }
@@ -79,7 +90,8 @@ public class Jogador extends Observable {
 
     @Override
     public String toString() {
-        String s = "[Jogador] Nome: " + this.getNome() + "(" + this.getVida() + "/100)";
+        String s = "[" + this.getNome() + "] ";
+        s += this.isVivo() ? (+this.getVida() + "/100") : "MORTO!";
         return s;
     }
 }

@@ -2,24 +2,42 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import controller.MapaDoJogo;
+import model.Dificuldade;
 
 public class TelaPrincipal extends JFrame {
 
-    private JTextField tfNomeOpo1;
-    private JTextField txtNomeJog1;
+    private ArrayList<PnJogador> panelsJogadores;
+    private ArrayList<PnOponente> panelsOponentes;
+
+    private ArrayList<GridBagConstraints> gbcJogadores;
+    private ArrayList<GridBagLayout> gblJogadores;
+    private ArrayList<GridBagConstraints> gbcOponentes;
+    private ArrayList<GridBagLayout> gblOponentes;
+
+    private JPanel pnJogadores;
+    private JPanel pnOponentes;
 
     public TelaPrincipal() {
+        panelsJogadores = new ArrayList<PnJogador>();
+        panelsOponentes = new ArrayList<PnOponente>();
+
+        gbcJogadores = new ArrayList<GridBagConstraints>();
+        gblJogadores = new ArrayList<GridBagLayout>();
+        gbcOponentes = new ArrayList<GridBagConstraints>();
+        gblOponentes = new ArrayList<GridBagLayout>();
+
         iniciaComponentesDeTela();
     }
 
@@ -30,133 +48,214 @@ public class TelaPrincipal extends JFrame {
         setResizable(false);
         setTitle("Trabalho II - Jogo de Tiro");
 
-        JPanel pnOponentes = new JPanel();
+        pnOponentes = new JPanel();
         pnOponentes.setBorder(new TitledBorder(null, "Oponentes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        pnOponentes.setPreferredSize(new Dimension(0, 225));
-        pnOponentes.setMinimumSize(new Dimension(10, 225));
-        pnOponentes.setSize(new Dimension(0, 225));
+        pnOponentes.setPreferredSize(new Dimension(0, 300));
+        pnOponentes.setMinimumSize(new Dimension(10, 300));
+        pnOponentes.setSize(new Dimension(0, 300));
         getContentPane().add(pnOponentes, BorderLayout.NORTH);
         GridBagLayout gbl_pnOponentes = new GridBagLayout();
-        gbl_pnOponentes.columnWidths = new int[] { 0, 0, 0, 0 };
-        gbl_pnOponentes.rowHeights = new int[] { 0, 0, 0, 0 };
-        gbl_pnOponentes.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
-        gbl_pnOponentes.rowWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+        gbl_pnOponentes.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        gbl_pnOponentes.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
+        gbl_pnOponentes.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        gbl_pnOponentes.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         pnOponentes.setLayout(gbl_pnOponentes);
 
-        JPanel pnOponenteDemo = new JPanel();
-        GridBagConstraints gbc_pnOponenteDemo = new GridBagConstraints();
-        gbc_pnOponenteDemo.insets = new Insets(0, 0, 5, 5);
-        gbc_pnOponenteDemo.fill = GridBagConstraints.BOTH;
-        gbc_pnOponenteDemo.gridx = 1;
-        gbc_pnOponenteDemo.gridy = 1;
-        pnOponentes.add(pnOponenteDemo, gbc_pnOponenteDemo);
-        GridBagLayout gbl_pnOponenteDemo = new GridBagLayout();
-        gbl_pnOponenteDemo.columnWidths = new int[] { 0, 0 };
-        gbl_pnOponenteDemo.rowHeights = new int[] { 0, 0, 0, 0 };
-        gbl_pnOponenteDemo.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-        gbl_pnOponenteDemo.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
-        pnOponenteDemo.setLayout(gbl_pnOponenteDemo);
+        //Oponentes
+        GridBagConstraints gbc_pnOponente1 = new GridBagConstraints();
+        gbc_pnOponente1.insets = new Insets(0, 0, 5, 5);
+        gbc_pnOponente1.fill = GridBagConstraints.BOTH;
+        gbc_pnOponente1.gridx = 1;
+        gbc_pnOponente1.gridy = 1;
+        GridBagLayout gbl_pnOponente1 = new GridBagLayout();
+        gbl_pnOponente1.columnWidths = new int[] { 0, 0 };
+        gbl_pnOponente1.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponente1.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnOponente1.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnOponente2 = new GridBagConstraints();
+        gbc_pnOponente2.insets = new Insets(0, 0, 5, 5);
+        gbc_pnOponente2.fill = GridBagConstraints.BOTH;
+        gbc_pnOponente2.gridx = 3;
+        gbc_pnOponente2.gridy = 1;
+        GridBagLayout gbl_pnOponente2 = new GridBagLayout();
+        gbl_pnOponente2.columnWidths = new int[] { 0, 0 };
+        gbl_pnOponente2.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponente2.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnOponente2.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnOponente3 = new GridBagConstraints();
+        gbc_pnOponente3.insets = new Insets(0, 0, 5, 5);
+        gbc_pnOponente3.fill = GridBagConstraints.BOTH;
+        gbc_pnOponente3.gridx = 5;
+        gbc_pnOponente3.gridy = 1;
+        GridBagLayout gbl_pnOponente3 = new GridBagLayout();
+        gbl_pnOponente3.columnWidths = new int[] { 0, 0 };
+        gbl_pnOponente3.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponente3.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnOponente3.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnOponente4 = new GridBagConstraints();
+        gbc_pnOponente4.insets = new Insets(0, 0, 5, 5);
+        gbc_pnOponente4.fill = GridBagConstraints.BOTH;
+        gbc_pnOponente4.gridx = 7;
+        gbc_pnOponente4.gridy = 1;
+        GridBagLayout gbl_pnOponente4 = new GridBagLayout();
+        gbl_pnOponente4.columnWidths = new int[] { 0, 0 };
+        gbl_pnOponente4.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponente4.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnOponente4.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnOponente5 = new GridBagConstraints();
+        gbc_pnOponente5.insets = new Insets(0, 0, 5, 5);
+        gbc_pnOponente5.fill = GridBagConstraints.BOTH;
+        gbc_pnOponente5.gridx = 1;
+        gbc_pnOponente5.gridy = 3;
+        GridBagLayout gbl_pnOponente5 = new GridBagLayout();
+        gbl_pnOponente5.columnWidths = new int[] { 0, 0 };
+        gbl_pnOponente5.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponente5.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnOponente5.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnOponente6 = new GridBagConstraints();
+        gbc_pnOponente6.insets = new Insets(0, 0, 5, 5);
+        gbc_pnOponente6.fill = GridBagConstraints.BOTH;
+        gbc_pnOponente6.gridx = 3;
+        gbc_pnOponente6.gridy = 3;
+        GridBagLayout gbl_pnOponente6 = new GridBagLayout();
+        gbl_pnOponente6.columnWidths = new int[] { 0, 0 };
+        gbl_pnOponente6.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponente6.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnOponente6.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnOponente7 = new GridBagConstraints();
+        gbc_pnOponente7.insets = new Insets(0, 0, 5, 5);
+        gbc_pnOponente7.fill = GridBagConstraints.BOTH;
+        gbc_pnOponente7.gridx = 5;
+        gbc_pnOponente7.gridy = 3;
+        GridBagLayout gbl_pnOponente7 = new GridBagLayout();
+        gbl_pnOponente7.columnWidths = new int[] { 0, 0 };
+        gbl_pnOponente7.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponente7.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnOponente7.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnOponente8 = new GridBagConstraints();
+        gbc_pnOponente8.insets = new Insets(0, 0, 5, 5);
+        gbc_pnOponente8.fill = GridBagConstraints.BOTH;
+        gbc_pnOponente8.gridx = 7;
+        gbc_pnOponente8.gridy = 3;
+        GridBagLayout gbl_pnOponente8 = new GridBagLayout();
+        gbl_pnOponente8.columnWidths = new int[] { 0, 0 };
+        gbl_pnOponente8.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnOponente8.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnOponente8.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 
-        tfNomeOpo1 = new JTextField();
-        tfNomeOpo1.setEditable(false);
-        tfNomeOpo1.setText("NomeDemo");
-        GridBagConstraints gbc_tfNomeOpo1 = new GridBagConstraints();
-        gbc_tfNomeOpo1.insets = new Insets(0, 0, 5, 0);
-        gbc_tfNomeOpo1.fill = GridBagConstraints.HORIZONTAL;
-        gbc_tfNomeOpo1.gridx = 0;
-        gbc_tfNomeOpo1.gridy = 0;
-        pnOponenteDemo.add(tfNomeOpo1, gbc_tfNomeOpo1);
-        tfNomeOpo1.setColumns(10);
+        gbcOponentes.add(gbc_pnOponente1);
+        gblOponentes.add(gbl_pnOponente1);
+        gbcOponentes.add(gbc_pnOponente2);
+        gblOponentes.add(gbl_pnOponente2);
+        gbcOponentes.add(gbc_pnOponente3);
+        gblOponentes.add(gbl_pnOponente3);
+        gbcOponentes.add(gbc_pnOponente4);
+        gblOponentes.add(gbl_pnOponente4);
+        gbcOponentes.add(gbc_pnOponente5);
+        gblOponentes.add(gbl_pnOponente5);
+        gbcOponentes.add(gbc_pnOponente6);
+        gblOponentes.add(gbl_pnOponente6);
+        gbcOponentes.add(gbc_pnOponente7);
+        gblOponentes.add(gbl_pnOponente7);
+        gbcOponentes.add(gbc_pnOponente8);
+        gblOponentes.add(gbl_pnOponente8);
 
-        JProgressBar barVidaOpo1 = new JProgressBar();
-        barVidaOpo1.setStringPainted(true);
-        barVidaOpo1.setMinimumSize(new Dimension(120, 20));
-        barVidaOpo1.setString("Vida");
-        barVidaOpo1.setValue(75);
-        barVidaOpo1.setName("");
-        GridBagConstraints gbc_barVidaOpo1 = new GridBagConstraints();
-        gbc_barVidaOpo1.fill = GridBagConstraints.HORIZONTAL;
-        gbc_barVidaOpo1.insets = new Insets(0, 0, 5, 0);
-        gbc_barVidaOpo1.gridx = 0;
-        gbc_barVidaOpo1.gridy = 1;
-        pnOponenteDemo.add(barVidaOpo1, gbc_barVidaOpo1);
-
-        JComboBox cbComportamentoOpo1 = new JComboBox();
-        cbComportamentoOpo1.setModel(new DefaultComboBoxModel());
-        GridBagConstraints gbc_cbComportamentoOpo1 = new GridBagConstraints();
-        gbc_cbComportamentoOpo1.fill = GridBagConstraints.HORIZONTAL;
-        gbc_cbComportamentoOpo1.gridx = 0;
-        gbc_cbComportamentoOpo1.gridy = 2;
-        pnOponenteDemo.add(cbComportamentoOpo1, gbc_cbComportamentoOpo1);
-
-        JPanel pnJogadores = new JPanel();
+        //Jogadores
+        pnJogadores = new JPanel();
         pnJogadores.setBorder(new TitledBorder(null, "Jogadores", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        pnJogadores.setPreferredSize(new Dimension(0, 225));
-        pnJogadores.setMinimumSize(new Dimension(10, 225));
-        pnJogadores.setSize(new Dimension(0, 225));
+        pnJogadores.setPreferredSize(new Dimension(0, 200));
+        pnJogadores.setMinimumSize(new Dimension(10, 200));
+        pnJogadores.setSize(new Dimension(0, 200));
         getContentPane().add(pnJogadores, BorderLayout.CENTER);
         GridBagLayout gbl_pnJogadores = new GridBagLayout();
-        gbl_pnJogadores.columnWidths = new int[] { 0, 0, 0, 0 };
-        gbl_pnJogadores.rowHeights = new int[] { 0, 0, 0 };
-        gbl_pnJogadores.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
-        gbl_pnJogadores.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+        gbl_pnJogadores.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        gbl_pnJogadores.rowHeights = new int[] { 0, 0, 0, 0 };
+        gbl_pnJogadores.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        gbl_pnJogadores.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
         pnJogadores.setLayout(gbl_pnJogadores);
 
-        JPanel pnJogadorDemo = new JPanel();
-        GridBagConstraints gbc_pnJogadorDemo = new GridBagConstraints();
-        gbc_pnJogadorDemo.insets = new Insets(0, 0, 0, 5);
-        gbc_pnJogadorDemo.fill = GridBagConstraints.BOTH;
-        gbc_pnJogadorDemo.gridx = 1;
-        gbc_pnJogadorDemo.gridy = 1;
-        pnJogadores.add(pnJogadorDemo, gbc_pnJogadorDemo);
-        GridBagLayout gbl_pnJogadorDemo = new GridBagLayout();
-        gbl_pnJogadorDemo.columnWidths = new int[] { 0, 0 };
-        gbl_pnJogadorDemo.rowHeights = new int[] { 0, 0, 0, 0 };
-        gbl_pnJogadorDemo.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-        gbl_pnJogadorDemo.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
-        pnJogadorDemo.setLayout(gbl_pnJogadorDemo);
+        GridBagConstraints gbc_pnJogador1 = new GridBagConstraints();
+        gbc_pnJogador1.insets = new Insets(0, 0, 5, 5);
+        gbc_pnJogador1.fill = GridBagConstraints.BOTH;
+        gbc_pnJogador1.gridx = 1;
+        gbc_pnJogador1.gridy = 1;
+        GridBagLayout gbl_pnJogador1 = new GridBagLayout();
+        gbl_pnJogador1.columnWidths = new int[] { 0, 0 };
+        gbl_pnJogador1.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnJogador1.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnJogador1.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnJogador2 = new GridBagConstraints();
+        gbc_pnJogador2.insets = new Insets(0, 0, 5, 5);
+        gbc_pnJogador2.fill = GridBagConstraints.BOTH;
+        gbc_pnJogador2.gridx = 3;
+        gbc_pnJogador2.gridy = 1;
+        GridBagLayout gbl_pnJogador2 = new GridBagLayout();
+        gbl_pnJogador2.columnWidths = new int[] { 0, 0 };
+        gbl_pnJogador2.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnJogador2.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnJogador2.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnJogador3 = new GridBagConstraints();
+        gbc_pnJogador3.insets = new Insets(0, 0, 5, 5);
+        gbc_pnJogador3.fill = GridBagConstraints.BOTH;
+        gbc_pnJogador3.gridx = 5;
+        gbc_pnJogador3.gridy = 1;
+        GridBagLayout gbl_pnJogador3 = new GridBagLayout();
+        gbl_pnJogador3.columnWidths = new int[] { 0, 0 };
+        gbl_pnJogador3.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnJogador3.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnJogador3.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        GridBagConstraints gbc_pnJogador4 = new GridBagConstraints();
+        gbc_pnJogador4.insets = new Insets(0, 0, 5, 5);
+        gbc_pnJogador4.fill = GridBagConstraints.BOTH;
+        gbc_pnJogador4.gridx = 7;
+        gbc_pnJogador4.gridy = 1;
+        GridBagLayout gbl_pnJogador4 = new GridBagLayout();
+        gbl_pnJogador4.columnWidths = new int[] { 0, 0 };
+        gbl_pnJogador4.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+        gbl_pnJogador4.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+        gbl_pnJogador4.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 
-        txtNomeJog1 = new JTextField();
-        txtNomeJog1.setText("NomeDemo");
-        GridBagConstraints gbc_txtNomeJog1 = new GridBagConstraints();
-        gbc_txtNomeJog1.insets = new Insets(0, 0, 5, 0);
-        gbc_txtNomeJog1.fill = GridBagConstraints.HORIZONTAL;
-        gbc_txtNomeJog1.gridx = 0;
-        gbc_txtNomeJog1.gridy = 0;
-        pnJogadorDemo.add(txtNomeJog1, gbc_txtNomeJog1);
-        txtNomeJog1.setColumns(10);
-
-        JProgressBar progressBar = new JProgressBar();
-        progressBar.setMinimumSize(new Dimension(120, 20));
-        progressBar.setStringPainted(true);
-        progressBar.setString("Vida");
-        progressBar.setValue(85);
-        GridBagConstraints gbc_progressBar = new GridBagConstraints();
-        gbc_progressBar.fill = GridBagConstraints.HORIZONTAL;
-        gbc_progressBar.insets = new Insets(0, 0, 5, 0);
-        gbc_progressBar.gridx = 0;
-        gbc_progressBar.gridy = 1;
-        pnJogadorDemo.add(progressBar, gbc_progressBar);
-
-        JComboBox cbAcaoJog1 = new JComboBox();
-        cbAcaoJog1.setModel(new DefaultComboBoxModel(new String[] { "Sem A\u00E7\u00E3o", "Defender", "Atacar Opo1" }));
-        GridBagConstraints gbc_cbAcaoJog1 = new GridBagConstraints();
-        gbc_cbAcaoJog1.fill = GridBagConstraints.HORIZONTAL;
-        gbc_cbAcaoJog1.gridx = 0;
-        gbc_cbAcaoJog1.gridy = 2;
-        pnJogadorDemo.add(cbAcaoJog1, gbc_cbAcaoJog1);
+        gbcJogadores.add(gbc_pnJogador1);
+        gblJogadores.add(gbl_pnJogador1);
+        gbcJogadores.add(gbc_pnJogador2);
+        gblJogadores.add(gbl_pnJogador2);
+        gbcJogadores.add(gbc_pnJogador3);
+        gblJogadores.add(gbl_pnJogador3);
+        gbcJogadores.add(gbc_pnJogador4);
+        gblJogadores.add(gbl_pnJogador4);
 
         JPanel pnAcoes = new JPanel();
-        pnAcoes.setPreferredSize(new Dimension(10, 150));
-        pnAcoes.setMinimumSize(new Dimension(10, 150));
-        pnAcoes.setSize(new Dimension(0, 150));
+        pnAcoes.setPreferredSize(new Dimension(10, 50));
+        pnAcoes.setMinimumSize(new Dimension(10, 50));
+        pnAcoes.setSize(new Dimension(0, 50));
         getContentPane().add(pnAcoes, BorderLayout.SOUTH);
-        GridBagLayout gbl_pnAcoes = new GridBagLayout();
-        gbl_pnAcoes.columnWidths = new int[] { 0, 0 };
-        gbl_pnAcoes.rowHeights = new int[] { 0, 0 };
-        gbl_pnAcoes.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-        gbl_pnAcoes.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
-        pnAcoes.setLayout(gbl_pnAcoes);
+        pnAcoes.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+
+        JButton btnExecutarRodada = new JButton("Executar Rodada");
+        btnExecutarRodada.setPreferredSize(new Dimension(115, 40));
+        btnExecutarRodada.setSize(new Dimension(0, 40));
+        btnExecutarRodada.setMaximumSize(new Dimension(115, 40));
+        btnExecutarRodada.setMinimumSize(new Dimension(115, 40));
+        pnAcoes.add(btnExecutarRodada);
     }
 
+    public void iniciaComponentesJogadores(int qtdJogadores, int qtdOponentes, Dificuldade d) {
+        MapaDoJogo m = MapaDoJogo.getInstance(qtdJogadores, d);
+
+        for (int i = 0; i < qtdJogadores; i++) {
+            PnJogador pnJogador = new PnJogador(m.getJogador(i));
+            pnJogadores.add(pnJogador, gbcJogadores.get(i));
+            pnJogador.setLayout(gblJogadores.get(i));
+            panelsJogadores.add(pnJogador);
+        }
+
+        for (int i = 0; i < qtdOponentes; i++) {
+            PnOponente pnOponente = new PnOponente(m.getOponente(i));
+            pnOponentes.add(pnOponente, gbcOponentes.get(i));
+            pnOponente.setLayout(gblOponentes.get(i));
+            panelsOponentes.add(pnOponente);
+        }
+
+        this.setVisible(true);
+    }
 }
